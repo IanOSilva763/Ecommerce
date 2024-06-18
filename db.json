@@ -4,6 +4,11 @@
       "id": "6c1f",
       "email": "Ian@ian.com",
       "password": "ian"
+    },
+    {
+      "id": "2",
+      "email": "paulin",
+      "password": "123"
     }
   ],
   "products": [],
