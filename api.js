@@ -25,3 +25,12 @@ export const registerUser = async (user) => {
     }
   }
 };
+export const getUserByEmail = async (email) => {
+  try {
+    const response = await axios.get(`${API_URL}/users?email=${email}`);
+    return response.data[0]; // Como a busca retorna um array, pegue o primeiro item
+  } catch (error) {
+    console.error('Erro ao buscar usuário:', error);
+    throw new Error('Erro ao buscar usuário');
+  }
+};
