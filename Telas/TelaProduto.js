@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Alert, TouchableOpacity, TextInput, View } from 'react-native';
+import { Alert, TouchableOpacity, TextInput, View, StyleSheet, Text } from 'react-native';
 import { addProduct } from '../api';
 
 const TelaProduto = () => {
@@ -16,44 +16,43 @@ const TelaProduto = () => {
     } catch (error) {
       Alert.alert('Error', error.message);
     }
-  }
+  };
+
+  return (
+    <View style={styles.principal}>
+      <TextInput
+        style={styles.textInput}
+        placeholder="Produto"
+        value={name}
+        onChangeText={setName}
+      />
+      <TextInput
+        style={[styles.textInput, styles.textArea]}
+        placeholder="Descricao"
+        value={description}
+        onChangeText={setDescription}
+        multiline
+        numberOfLines={3}
+      />
+      <TextInput
+        style={styles.textInput}
+        placeholder="Preco"
+        value={price}
+        onChangeText={setPrice}
+        keyboardType="numeric"
+      />
+      <TextInput
+        style={styles.textInput}
+        placeholder="Image URL"
+        value={imageUrl}
+        onChangeText={setImageUrl}
+      />
+      <TouchableOpacity onPress={handleAddProduct} style={styles.button}>
+        <Text style={styles.buttonText}>Cadastrar Produto</Text>
+      </TouchableOpacity>
+    </View>
+  );
 };
-
-return (
-  <View style={styles.principal}>
-    <TextInput
-      style={styles.textInput}
-      placeholder="Produto"
-      value={name}
-      onChangeText={setName}
-    />
-    <TextInput
-      style={[styles.textInput, styles.textArea]}
-      placeholder="Descricao"
-      value={description}
-      onChangeText={setDescription}
-      multiline
-      numberOfLines={3}
-    />
-    <TextInput
-      style={styles.textInput}
-      placeholder="Preco"
-      value={price}
-      onChangeText={setPrice}
-      keyboardType="numeric"
-    />
-    <TextInput
-      style={styles.textInput}
-      placeholder="Image URL"
-      value={imageURL}
-      onChangeText={setImageURL}
-    />
-    <TouchableOpacity onPress={addProduct} style={styles.button}>
-      <Text style={styles.buttonText}>Cadastrar Produto</Text>
-    </TouchableOpacity>
-  </View>
-)
-
 
 const styles = StyleSheet.create({
   principal: {
@@ -88,7 +87,6 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: 'bold',
   },
-},
-)
+});
 
 export default TelaProduto;
