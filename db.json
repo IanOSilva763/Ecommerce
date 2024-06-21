@@ -9,6 +9,16 @@
       "id": "2",
       "email": "paulin",
       "password": "123"
+    },
+    {
+      "id": "54b5",
+      "email": "ian@ian@gmail.com",
+      "password": "ian"
+    },
+    {
+      "id": "c3dd",
+      "email": "paulo",
+      "password": "123"
     }
   ],
   "products": [],

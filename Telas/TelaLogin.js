@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
-import { Alert, Text , TextInput, View , StyleSheet , TouchableOpacity } from 'react-native';
-import { getUserByEmail } from '../api'; 
-import TelaCadastro from './TelaCadastro';
+import { Alert, Text, TextInput, View, StyleSheet, TouchableOpacity } from 'react-native';
+import { getUserByEmail } from '../api';
 
 const TelaLogin = ({ navigation }) => {
   const [email, setEmail] = useState('');
@@ -21,13 +20,24 @@ const TelaLogin = ({ navigation }) => {
   };
 
   return (
-    <View style={style.container} >
-      <TextInput style={style.textInput} placeholder="Email" value={email} onChangeText={setEmail} />
-      <TextInput style={style.textInput} placeholder="Password" value={password} secureTextEntry onChangeText={setPassword} />
+    <View style={style.container}>
+      <TextInput
+        style={style.textInput}
+        placeholder="Email"
+        value={email}
+        onChangeText={setEmail}
+      />
+      <TextInput
+        style={style.textInput}
+        placeholder="Password"
+        value={password}
+        secureTextEntry
+        onChangeText={setPassword}
+      />
       <TouchableOpacity onPress={loginUser} style={style.button}>
         <Text style={style.textbtn}>Login</Text>
       </TouchableOpacity>
-      <TouchableOpacity onPress={TelaCadastro} style={[style.button, style.signupButton]}>
+      <TouchableOpacity onPress={() => navigation.navigate('Cadastro')} style={[style.button, style.signupButton]}>
         <Text style={style.textbtn}>Sign Up</Text>
       </TouchableOpacity>
     </View>
@@ -49,10 +59,10 @@ const style = StyleSheet.create({
     borderRadius: 4,
     marginTop: 10,
     elevation: 3,
-    backgroundColor: '#FFFFFF', 
+    backgroundColor: '#FFFFFF',
   },
   signupButton: {
-    marginTop: 20, 
+    marginTop: 20,
   },
   textbtn: {
     fontSize: 16,
