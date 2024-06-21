@@ -1,35 +1,32 @@
-import axios from 'axios';
 import React, { useState } from 'react';
-import { Button, TextInput, View } from 'react-native';
-
-const API_URL = 'http://localhost:3000'; // ajuste conforme necessário
+import { Alert, Button, TextInput, View } from 'react-native';
+import { addProduct } from '../api';
 
 const TelaProduto = () => {
   const [name, setName] = useState('');
   const [description, setDescription] = useState('');
   const [price, setPrice] = useState('');
   const [category, setCategory] = useState('');
+  const [imageUrl, setImageUrl] = useState('');
 
-  const addProduct = async () => {
+  const handleAddProduct = async () => {
+    const product = { name, description, price, category, imageUrl };
     try {
-      await axios.post(`${API_URL}/products`, {
-        name,
-        description,
-        price,
-        category
-      });
+      await addProduct(product);
+      Alert.alert('Success', 'Product added successfully');
     } catch (error) {
-      console.error(error);
+      Alert.alert('Error', error.message);
     }
   };
 
   return (
     <View>
-      <TextInput placeholder="Name" onChangeText={setName} />
-      <TextInput placeholder="Description" onChangeText={setDescription} />
-      <TextInput placeholder="Price" onChangeText={setPrice} />
-      <TextInput placeholder="Category" onChangeText={setCategory} />
-      <Button title="Add Product" onPress={addProduct} />
+      <TextInput placeholder="Name" onChangeText={setName} value={name} />
+      <TextInput placeholder="Description" onChangeText={setDescription} value={description} />
+      <TextInput placeholder="Price" onChangeText={setPrice} value={price} keyboardType="numeric" />
+      <TextInput placeholder="Category" onChangeText={setCategory} value={category} />
+      <TextInput placeholder="Image URL" onChangeText={setImageUrl} value={imageUrl} />
+      <Button title="Add Product" onPress={handleAddProduct} />
     </View>
   );
 };
