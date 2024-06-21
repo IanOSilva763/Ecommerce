@@ -1,74 +1,59 @@
-import axios from 'axios';
 import React, { useState } from 'react';
-import { TouchableOpacity, TextInput, View, Text, StyleSheet } from 'react-native';
-
-const API_URL = 'http://192.168.2.187:3000/products'; // ajuste conforme necessário
+import { Alert, TouchableOpacity, TextInput, View } from 'react-native';
+import { addProduct } from '../api';
 
 const TelaProduto = () => {
   const [name, setName] = useState('');
   const [description, setDescription] = useState('');
   const [price, setPrice] = useState('');
-  const [imageURL, setImageURL] = useState('');
+  const [imageUrl, setImageUrl] = useState('');
 
-  const addProduct = async () => {
+  const handleAddProduct = async () => {
+    const product = { name, description, price, imageUrl };
     try {
-      const productData = {
-        name,
-        description,
-        price,
-        imageURL,
-      };
-
-      await axios.post(API_URL, productData);
-
-      setName('');
-      setDescription('');
-      setPrice('');
-      setImageURL('');
-
-      // Mostrar algum feedback ao usuário (opcional)
-      alert('Product added successfully!');
+      await addProduct(product);
+      Alert.alert('Success', 'Product added successfully');
     } catch (error) {
-      console.error('Error adding product:', error);
-      alert('Failed to add product. Please try again.');
+      Alert.alert('Error', error.message);
     }
-  };
-
-  return (
-    <View style={styles.principal}>
-      <TextInput
-        style={styles.textInput}
-        placeholder="Produto"
-        value={name}
-        onChangeText={setName}
-      />
-      <TextInput
-        style={[styles.textInput, styles.textArea]}
-        placeholder="Descricao"
-        value={description}
-        onChangeText={setDescription}
-        multiline
-        numberOfLines={3}
-      />
-      <TextInput
-        style={styles.textInput}
-        placeholder="Preco"
-        value={price}
-        onChangeText={setPrice}
-        keyboardType="numeric"
-      />
-      <TextInput
-        style={styles.textInput}
-        placeholder="Image URL"
-        value={imageURL}
-        onChangeText={setImageURL}
-      />
-      <TouchableOpacity onPress={addProduct} style={styles.button}>
-        <Text style={styles.buttonText}>Cadastrar Produto</Text>
-      </TouchableOpacity>
-    </View>
-  );
+  }
 };
+
+return (
+  <View style={styles.principal}>
+    <TextInput
+      style={styles.textInput}
+      placeholder="Produto"
+      value={name}
+      onChangeText={setName}
+    />
+    <TextInput
+      style={[styles.textInput, styles.textArea]}
+      placeholder="Descricao"
+      value={description}
+      onChangeText={setDescription}
+      multiline
+      numberOfLines={3}
+    />
+    <TextInput
+      style={styles.textInput}
+      placeholder="Preco"
+      value={price}
+      onChangeText={setPrice}
+      keyboardType="numeric"
+    />
+    <TextInput
+      style={styles.textInput}
+      placeholder="Image URL"
+      value={imageURL}
+      onChangeText={setImageURL}
+    />
+    <TouchableOpacity onPress={addProduct} style={styles.button}>
+      <Text style={styles.buttonText}>Cadastrar Produto</Text>
+    </TouchableOpacity>
+  </View>
+)
+
 
 const styles = StyleSheet.create({
   principal: {
@@ -103,6 +88,7 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: 'bold',
   },
-});
+},
+)
 
 export default TelaProduto;
