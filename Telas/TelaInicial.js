@@ -2,7 +2,8 @@ import React, { useEffect, useState } from 'react';
 import { Button, FlatList, Image, StyleSheet, Text, View } from 'react-native';
 import { getProducts } from '../api';
 
-const TelaInicial = ({ navigation }) => {
+const TelaInicial = ({ route, navigation }) => {
+  const { isAdmin } = route.params;
   const [products, setProducts] = useState([]);
 
   useEffect(() => {
@@ -30,19 +31,26 @@ const TelaInicial = ({ navigation }) => {
   return (
     <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
       <Text>Bem-vindo à Tela Inicial!</Text>
+      {isAdmin && (
+        <Button
+          title="Tela Adm"
+          onPress={() => navigation.navigate('Admin')}
+        />
+      )}
       <Button
-        title="Ir para Produtos"
-        onPress={() => navigation.navigate('Produto')}
+        title="Ir para Pedidos"
+        onPress={() => navigation.navigate('Pedido')}
       />
       <FlatList
-      data={products}
-      keyExtractor={(item) => item.id.toString()}
-      renderItem={renderProduct}
-      contentContainerStyle={styles.list}
-    />
+        data={products}
+        keyExtractor={(item) => item.id.toString()}
+        renderItem={renderProduct}
+        contentContainerStyle={styles.list}
+      />
     </View>
   );
 };
+
 const styles = StyleSheet.create({
   list: {
     padding: 10,

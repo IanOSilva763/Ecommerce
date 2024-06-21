@@ -3,6 +3,7 @@ import { createStackNavigator } from '@react-navigation/stack';
 import { CartProvider } from './CarrinhoContexto';
 import TelaAdm from './Telas/TelaAdm';
 import TelaCadastro from './Telas/TelaCadastro';
+import TelaEditProduto from './Telas/TelaEditProduto';
 import TelaInicial from './Telas/TelaInicial';
 import TelaLogin from './Telas/TelaLogin';
 import TelaPedido from './Telas/TelaPedido';
@@ -27,6 +28,7 @@ export default function App() {
           <Stack.Screen name="Produto" component={TelaProduto} />
           <Stack.Screen name="Pedido" component={TelaPedido} />
           <Stack.Screen name="Admin" component={TelaAdm} />
+          <Stack.Screen name="EditProduto" component={TelaEditProduto} />
         </Stack.Navigator>
       </NavigationContainer>
     </CartProvider>

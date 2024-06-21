@@ -9,8 +9,27 @@
       "id": "2",
       "email": "paulin",
       "password": "123"
+    },
+    {
+      "id": "29ad",
+      "email": "Adm",
+      "password": "Adm"
+    },
+    {
+      "id": "46f3",
+      "email": "Ian",
+      "password": "Ian"
     }
   ],
-  "products": [],
+  "products": [
+    {
+      "id": "073c",
+      "name": "Tênis",
+      "description": "Tênis Nike branco 39/40",
+      "price": "115",
+      "category": "Roupas",
+      "imageUrl": "https://images.app.goo.gl/egQW4zcotCGwWJD9A"
+    }
+  ],
   "orders": []
 }

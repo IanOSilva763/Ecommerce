@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Alert, Button, TextInput, View } from 'react-native';
 import { addProduct } from '../api';
 
-const TelaProduto = () => {
+const TelaProduto = ({ navigation }) => {
   const [name, setName] = useState('');
   const [description, setDescription] = useState('');
   const [price, setPrice] = useState('');
