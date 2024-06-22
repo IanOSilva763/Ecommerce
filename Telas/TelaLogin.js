@@ -1,5 +1,6 @@
+import * as LocalAuthentication from 'expo-local-authentication';
 import React, { useState } from 'react';
-import { Alert, Text, TextInput, View, StyleSheet, TouchableOpacity } from 'react-native';
+import { Alert, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
 import { getUserByEmail } from '../api';
 
 const TelaLogin = ({ navigation }) => {
@@ -10,12 +11,39 @@ const TelaLogin = ({ navigation }) => {
     try {
       const user = await getUserByEmail(email);
       if (user && user.password === password) {
-        navigation.navigate('Inicio');
+        const isAdmin = (email === 'Adm' && password === 'Adm');
+        navigation.navigate('Inicio', { isAdmin });
       } else {
         Alert.alert('Login Error', 'Invalid email or password');
       }
     } catch (error) {
       Alert.alert('Login Error', error.message);
+    }
+  };
+  const authenticate = async () => {
+    try {
+      const hasHardware = await LocalAuthentication.hasHardwareAsync();
+      const isEnrolled = await LocalAuthentication.isEnrolledAsync();
+      if (hasHardware && isEnrolled) {
+        const result = await LocalAuthentication.authenticateAsync({
+          promptMessage: 'Authenticate',
+          fallbackLabel: 'Use Passcode',
+        });
+        if (result.success) {
+          const user = await getUserByEmail(email);  // Verify user credentials
+          if (user && user.password === password) {
+            navigation.navigate('Inicio', { isAdmin: user.email === 'adm' && user.password === 'adm' });
+          } else {
+            Alert.alert('Login Error', 'Invalid email or password');
+          }
+        } else {
+          Alert.alert('Authentication Error', 'Failed to authenticate');
+        }
+      } else {
+        Alert.alert('Authentication Error', 'Device authentication not available');
+      }
+    } catch (error) {
+      Alert.alert('Authentication Error', error.message);
     }
   };
 
