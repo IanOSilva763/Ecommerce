@@ -12,9 +12,10 @@ const TelaProduto = ({ navigation }) => {
     const product = { name, description, price, imageUrl };
     try {
       await addProduct(product);
-      Alert.alert('Success', 'Product added successfully');
+      Alert.alert('Sucesso', 'Produto adicionado com sucesso');
+      navigation.goBack();
     } catch (error) {
-      Alert.alert('Error', error.message);
+      Alert.alert('Erro', error.message);
     }
   };
 
@@ -28,7 +29,7 @@ const TelaProduto = ({ navigation }) => {
       />
       <TextInput
         style={[styles.textInput, styles.textArea]}
-        placeholder="Descricao"
+        placeholder="Descrição"
         value={description}
         onChangeText={setDescription}
         multiline
@@ -36,14 +37,14 @@ const TelaProduto = ({ navigation }) => {
       />
       <TextInput
         style={styles.textInput}
-        placeholder="Preco"
+        placeholder="Preço"
         value={price}
         onChangeText={setPrice}
         keyboardType="numeric"
       />
       <TextInput
         style={styles.textInput}
-        placeholder="Image URL"
+        placeholder="URL da Imagem"
         value={imageUrl}
         onChangeText={setImageUrl}
       />

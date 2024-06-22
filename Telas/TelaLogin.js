@@ -66,7 +66,7 @@ const TelaLogin = ({ navigation }) => {
         <Text style={style.textbtn}>Login</Text>
       </TouchableOpacity>
       <TouchableOpacity onPress={() => navigation.navigate('Cadastro')} style={[style.button, style.signupButton]}>
-        <Text style={style.textbtn}>Sign Up</Text>
+        <Text style={style.textbtn}>Cadastrar</Text>
       </TouchableOpacity>
     </View>
   );

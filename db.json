@@ -24,8 +24,21 @@
       "id": "fe28",
       "email": "adm",
       "password": "adm"
+    },
+    {
+      "id": "a61d",
+      "email": "Adm",
+      "password": "Adm"
     }
   ],
-  "products": [],
+  "products": [
+    {
+      "id": "e6c3",
+      "name": "Tenis AirForce",
+      "description": "Airforce Branco",
+      "price": "400",
+      "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/7/7e/Nike_air_Force_1_white_on_white.jpg/2560px-Nike_air_Force_1_white_on_white.jpg"
+    }
+  ],
   "orders": []
 }
