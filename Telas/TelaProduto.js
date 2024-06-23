@@ -1,12 +1,24 @@
-import React, { useState } from 'react';
+import { useIsFocused } from '@react-navigation/native';
+import React, { useEffect, useState } from 'react';
 import { Alert, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
 import { addProduct } from '../api';
 
 const TelaProduto = ({ navigation }) => {
+  const isFocused = useIsFocused();
   const [name, setName] = useState('');
   const [description, setDescription] = useState('');
   const [price, setPrice] = useState('');
   const [imageUrl, setImageUrl] = useState('');
+
+  useEffect(() => {
+    if (isFocused) {
+      // Limpar os campos quando a tela ganhar foco
+      setName('');
+      setDescription('');
+      setPrice('');
+      setImageUrl('');
+    }
+  }, [isFocused]);
 
   const handleAddProduct = async () => {
     const product = { name, description, price, imageUrl };

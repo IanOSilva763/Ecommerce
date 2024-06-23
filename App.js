@@ -8,7 +8,6 @@ import TelaDashboard from './Telas/TelaDashboard';
 import TelaEditProduto from './Telas/TelaEditProduto';
 import TelaInicial from './Telas/TelaInicial';
 import TelaLogin from './Telas/TelaLogin';
-import TelaPedido from './Telas/TelaPedido';
 import TelaProduto from './Telas/TelaProduto';
 
 const Stack = createStackNavigator();
@@ -28,7 +27,6 @@ export default function App() {
           <Stack.Screen name="Cadastro" component={TelaCadastro} />
           <Stack.Screen name="Inicio" component={TelaInicial} />
           <Stack.Screen name="Produto" component={TelaProduto} />
-          <Stack.Screen name="Pedido" component={TelaPedido} />
           <Stack.Screen name="Admin" component={TelaAdm} />
           <Stack.Screen name="EditProduto" component={TelaEditProduto} />
           <Stack.Screen name="Carrinho" component={TelaCarrinho} />

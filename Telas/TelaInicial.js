@@ -1,4 +1,5 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { useIsFocused } from '@react-navigation/native';
 import React, { useEffect, useState } from 'react';
 import { Button, FlatList, Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
@@ -6,6 +7,7 @@ import { getProducts } from '../api';
 
 const TelaInicial = ({ route, navigation }) => {
   const { isAdmin } = route.params;
+  const isFocused = useIsFocused();
   const [products, setProducts] = useState([]);
   const [cartItems, setCartItems] = useState([]);
 
@@ -19,8 +21,10 @@ const TelaInicial = ({ route, navigation }) => {
       }
     };
 
-    fetchProducts();
-  }, []);
+    if (isFocused) {
+      fetchProducts();
+    }
+  }, [isFocused]);
 
   useEffect(() => {
     const loadCartItems = async () => {

@@ -1,11 +1,13 @@
-import { useEffect, useState } from 'react';
+import { useIsFocused } from '@react-navigation/native';
+import React, { useEffect, useState } from 'react';
 import { Alert, Button, StyleSheet, TextInput, View } from 'react-native';
 import { getProductById, updateProduct } from '../api';
 
 const TelaEditProduto = ({ route, navigation }) => {
-    const { productId } = route.params;
-    const [product, setProduct] = useState({ name: '', description: '', price: '', imageUrl: '' });
-  
+  const { productId } = route.params;
+  const isFocused = useIsFocused();
+  const [product, setProduct] = useState({ name: '', description: '', price: '', imageUrl: '' });
+
   useEffect(() => {
     const loadProduct = async () => {
       try {
@@ -16,8 +18,10 @@ const TelaEditProduto = ({ route, navigation }) => {
       }
     };
 
-    loadProduct();
-  }, [productId]);
+    if (isFocused) {
+      loadProduct();
+    }
+  }, [isFocused, productId]);
 
   const handleUpdate = async () => {
     try {
