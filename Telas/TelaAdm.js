@@ -1,36 +1,38 @@
+import { useIsFocused } from '@react-navigation/native';
 import React, { useEffect, useState } from 'react';
 import { Alert, Button, FlatList, Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { deleteProductById, fetchOrders, getProducts } from '../api';
 import { fetchOrders, getProducts, deleteProductById } from '../api'; 
 
 const TelaAdm = ({ navigation }) => {
+  const isFocused = useIsFocused();
   const [orders, setOrders] = useState([]);
   const [products, setProducts] = useState([]);
 
+  const loadProducts = async () => {
+    try {
+      const fetchedProducts = await getProducts();
+      setProducts(fetchedProducts);
+    } catch (error) {
+      console.error('Erro ao buscar produtos:', error);
+    }
+  };
+
+  const loadOrders = async () => {
+    try {
+      const fetchedOrders = await fetchOrders();
+      setOrders(fetchedOrders);
+    } catch (error) {
+      console.error('Erro ao buscar pedidos:', error);
+    }
+  };
+
   useEffect(() => {
-    const loadProducts = async () => {
-      try {
-        const fetchedProducts = await getProducts();
-        setProducts(fetchedProducts);
-      } catch (error) {
-        console.error('Erro ao buscar produtos:', error);
-      }
-    };
-
-    loadProducts();
-  }, []);
-
-  useEffect(() => {
-    const loadOrders = async () => {
-      try {
-        const fetchedOrders = await fetchOrders();
-        setOrders(fetchedOrders);
-      } catch (error) {
-        console.error('Erro ao buscar pedidos:', error);
-      }
-    };
-
-    loadOrders();
-  }, []);
+    if (isFocused) {
+      loadProducts();
+      loadOrders();
+    }
+  }, [isFocused]);
 
   const editProduct = (productId) => {
     navigation.navigate('EditProduto', { productId });
@@ -74,8 +76,12 @@ const TelaAdm = ({ navigation }) => {
   );
 
   return (
-    <View styles={styles.container}>
-      <Text styles={styles.header}>Admin Dashboard</Text>
+    <View style={styles.container}>
+      <Text style={styles.header}>Admin</Text>
+      <Button
+        title="Controle vendas"
+        onPress={() => navigation.navigate('Dashboard')}
+      />
       <Button
         title="Adicionar Produto"
         onPress={() => navigation.navigate('Produto')}
@@ -101,10 +107,10 @@ const styles = StyleSheet.create({
     padding: 10,
   },
   list: {
-    paddingBottom: 10,
+    paddingBottom: 22,
   },
   productContainer: {
-    marginBottom: 90,
+    marginBottom: 100,
     borderWidth: 1,
     borderColor: '#ccc',
     borderRadius: 10,
@@ -134,12 +140,12 @@ const styles = StyleSheet.create({
   header: {
     fontSize: 24,
     fontWeight: 'bold',
-    marginBottom: 20,
+    marginBottom: 1,
   },
   button: {
     alignItems: 'center',
     justifyContent: 'center',
-    paddingVertical: 12,
+    paddingVertical: 20,
     paddingHorizontal: 32,
     borderRadius: 4,
     marginTop: 10,

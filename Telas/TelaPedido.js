@@ -4,7 +4,7 @@ import { CarrinhoContexto } from '../CarrinhoContexto';
 import { calculoFrete } from '../calculoFrete';
 
 const TelaPedido = () => {
-  const { cart } = useContext(CarrinhoContexto);
+  const { carrinho } = useContext(CarrinhoContexto);
   const [frete, setFrete] = useState(null);
 
   const handleCheckout = async () => {
@@ -12,13 +12,13 @@ const TelaPedido = () => {
     setFrete(freteInfo);
   };
 
-  const total = cart.reduce((sum, product) => sum + product.price, 0) + (frete ? frete.custoFrete : 0);
+  const total = carrinho.reduce((sum, produto) => sum + produto.preco, 0) + (frete ? frete.custoFrete : 0);
 
   return (
     <View style={styles.container}>
       <Text style={styles.headerText}>Resumo da compra</Text>
-      {cart.map(product => (
-        <Text key={product.id} style={styles.itemText}>{product.name} - R$ {product.price}</Text>
+      {carrinho.map(produto => (
+        <Text key={produto.id} style={styles.itemText}>{produto.name} - R$ {produto.preco}</Text>
       ))}
       {frete && (
         <>

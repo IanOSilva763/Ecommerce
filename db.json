@@ -11,24 +11,19 @@
       "password": "123"
     },
     {
-      "id": "54b5",
-      "email": "ian@ian@gmail.com",
-      "password": "ian"
-    },
-    {
-      "id": "c3dd",
-      "email": "paulo",
-      "password": "123"
-    },
-    {
-      "id": "fe28",
-      "email": "adm",
-      "password": "adm"
-    },
-    {
-      "id": "a61d",
+      "id": "29ad",
       "email": "Adm",
       "password": "Adm"
+    },
+    {
+      "id": "46f3",
+      "email": "Ian",
+      "password": "Ian"
+    },
+    {
+      "id": "c4b7",
+      "email": "ian@gmail.com",
+      "password": "ian"
     }
   ],
   "products": [
@@ -36,8 +31,15 @@
       "id": "1c32",
       "name": "Tenis",
       "description": "Tenis",
-      "price": "85",
+      "price": "95",
       "imageUrl": "https://cdn.awsli.com.br/600x1000/1392/1392737/produto/188276783/d93e5dc2bc.jpg"
+    },
+    {
+      "id": "52fd",
+      "name": "Apple Watch",
+      "description": "Apple Watch 8",
+      "price": "3100",
+      "imageUrl": "https://www.zdnet.com/a/img/2022/09/27/206941ac-4a0c-4560-a55a-e8db6c5b8953/watch-face-full-view-apple-watch-8.jpg"
     }
   ],
   "orders": []
