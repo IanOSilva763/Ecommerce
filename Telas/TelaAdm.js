@@ -74,8 +74,8 @@ const TelaAdm = ({ navigation }) => {
   );
 
   return (
-    <View style={styles.container}>
-      <Text style={styles.header}>Admin Dashboard</Text>
+    <View styles={styles.container}>
+      <Text styles={styles.header}>Admin Dashboard</Text>
       <Button
         title="Adicionar Produto"
         onPress={() => navigation.navigate('Produto')}
@@ -104,7 +104,7 @@ const styles = StyleSheet.create({
     paddingBottom: 10,
   },
   productContainer: {
-    marginBottom: 20,
+    marginBottom: 90,
     borderWidth: 1,
     borderColor: '#ccc',
     borderRadius: 10,
