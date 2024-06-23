@@ -1,6 +1,6 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import React, { useEffect, useState } from 'react';
-import { Button, FlatList, Image, Text, TouchableOpacity, View } from 'react-native';
+import { Button, FlatList, Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { getProducts } from '../api';
 
@@ -60,23 +60,10 @@ const TelaInicial = ({ route, navigation }) => {
       <Text style={styles.descricaoProduto}>{item.description}</Text>
       <Text style={styles.precoProduto}>R$ {item.price}</Text>
       <Button title="Adicionar ao Carrinho" onPress={() => addToCart(item)} />
-    <View style={styles.containerProduto}>
-      <Image source={{ uri: item.imageUrl }} style={styles.imagemProduto} />
-      <Text style={styles.nomeProduto}>{item.name}</Text>
-      <Text style={styles.descricaoProduto}>{item.description}</Text>
-      <Text style={styles.precoProduto}>R$ {item.price}</Text>
-      <Button title="Adicionar ao Carrinho" onPress={() => addToCart(item)} />
     </View>
   );
 
   return (
-    <View style={styles.container}>
-      <View style={styles.topo}>
-        <Text style={styles.tituloTopo}>Bem-vindo à Tela Inicial!</Text>
-        <TouchableOpacity onPress={() => navigation.navigate('Carrinho', { cartItems })}>
-          <Icon name="shopping-cart" size={30} color="#000" />
-        </TouchableOpacity>
-      </View>
     <View style={styles.container}>
       <View style={styles.topo}>
         <Text style={styles.tituloTopo}>Bem-vindo à Tela Inicial!</Text>
@@ -96,7 +83,6 @@ const TelaInicial = ({ route, navigation }) => {
       />
       <FlatList
         data={products}
-        keyExtractor={(item, index) => `${item.id}-${index}`}
         keyExtractor={(item, index) => `${item.id}-${index}`}
         renderItem={renderProduct}
         contentContainerStyle={styles.list}
@@ -122,26 +108,9 @@ const styles = StyleSheet.create({
     fontSize: 20,
     fontWeight: 'bold',
   },
-  container: {
-    flex: 1,
-  },
-  topo: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    padding: 10,
-    backgroundColor: '#f8f8f8',
-    borderBottomWidth: 1,
-    borderBottomColor: '#ddd',
-  },
-  tituloTopo: {
-    fontSize: 20,
-    fontWeight: 'bold',
-  },
   list: {
     padding: 10,
   },
-  containerProduto: {
   containerProduto: {
     marginBottom: 20,
     borderWidth: 1,
@@ -151,23 +120,19 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
   },
   imagemProduto: {
-  imagemProduto: {
     width: '100%',
     height: 200,
     resizeMode: 'cover',
   },
-  nomeProduto: {
   nomeProduto: {
     fontSize: 18,
     fontWeight: 'bold',
     margin: 10,
   },
   descricaoProduto: {
-  descricaoProduto: {
     fontSize: 16,
     marginHorizontal: 10,
   },
-  precoProduto: {
   precoProduto: {
     fontSize: 16,
     fontWeight: 'bold',

@@ -74,8 +74,12 @@ const TelaAdm = ({ navigation }) => {
   );
 
   return (
-    <View styles={styles.container}>
-      <Text styles={styles.header}>Admin Dashboard</Text>
+    <View style={styles.container}>
+      <Text style={styles.header}>Admin</Text>
+      <Button
+        title="Controle vendas"
+        onPress={() => navigation.navigate('Dashboard')}
+      />
       <Button
         title="Adicionar Produto"
         onPress={() => navigation.navigate('Produto')}

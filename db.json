@@ -11,24 +11,14 @@
       "password": "123"
     },
     {
-      "id": "54b5",
-      "email": "ian@ian@gmail.com",
-      "password": "ian"
-    },
-    {
-      "id": "c3dd",
-      "email": "paulo",
-      "password": "123"
-    },
-    {
-      "id": "fe28",
-      "email": "adm",
-      "password": "adm"
-    },
-    {
-      "id": "a61d",
+      "id": "29ad",
       "email": "Adm",
       "password": "Adm"
+    },
+    {
+      "id": "46f3",
+      "email": "Ian",
+      "password": "Ian"
     }
   ],
   "products": [
