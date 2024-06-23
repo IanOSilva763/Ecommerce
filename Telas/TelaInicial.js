@@ -81,10 +81,6 @@ const TelaInicial = ({ route, navigation }) => {
           onPress={() => navigation.navigate('Admin')}
         />
       )}
-      <Button
-        title="Ir para Pedidos"
-        onPress={() => navigation.navigate('Pedido')}
-      />
       <FlatList
         data={products}
         keyExtractor={(item, index) => `${item.id}-${index}`}
