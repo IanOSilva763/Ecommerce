@@ -61,7 +61,7 @@ const TelaCarrinho = ({ route, navigation }) => {
       await AsyncStorage.removeItem('@cartItems');
 
       Alert.alert('Compra Finalizada', 'Obrigado por comprar conosco!');
-      navigation.navigate('Inicio'); // Navegar para a TelaDashboard após finalizar a compra
+      navigation.navigate('Inicio', { isAdmin: route.params.isAdmin }); // Navegar para a TelaDashboard após finalizar a compra
     } catch (error) {
       console.error('Erro ao finalizar compra:', error);
     }
