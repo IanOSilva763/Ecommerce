@@ -1,35 +1,62 @@
 import React, { useContext, useState } from 'react';
-import { Button, Text, View } from 'react-native';
+import { Button, Text, View, StyleSheet } from 'react-native';
 import { CarrinhoContexto } from '../CarrinhoContexto';
-import { calculateShipping } from '../shippingCalculator';
+import { calculoFrete } from '../calculoFrete';
 
 const TelaPedido = () => {
   const { cart } = useContext(CarrinhoContexto);
-  const [shipping, setShipping] = useState(null);
+  const [frete, setFrete] = useState(null);
 
   const handleCheckout = async () => {
-    const shippingInfo = await calculateShipping('12345678');
-    setShipping(shippingInfo);
+    const freteInfo = await calculoFrete('12345678'); // Exemplo de CEP
+    setFrete(freteInfo);
   };
 
-  const total = cart.reduce((sum, product) => sum + product.price, 0) + (shipping ? shipping.shippingCost : 0);
+  const total = cart.reduce((sum, product) => sum + product.price, 0) + (frete ? frete.custoFrete : 0);
 
   return (
-    <View>
-      <Text>Resumo da compra</Text>
+    <View style={styles.container}>
+      <Text style={styles.headerText}>Resumo da compra</Text>
       {cart.map(product => (
-        <Text key={product.id}>{product.name} - ${product.price}</Text>
+        <Text key={product.id} style={styles.itemText}>{product.name} - R$ {product.price}</Text>
       ))}
-      {shipping && (
+      {frete && (
         <>
-          <Text>Valor do frete: R${shipping.shippingCost}</Text>
-          <Text>Tempo de Delivery: {shipping.deliveryTime}</Text>
+          <Text style={styles.freteText}>Valor do frete: R$ {frete.custoFrete}</Text>
+          <Text style={styles.freteText}>Tempo de Delivery: {frete.tempoEntrega}</Text>
         </>
       )}
-      <Text>Total: ${total}</Text>
+      <Text style={styles.totalText}>Total: R$ {total.toFixed(2)}</Text>
       <Button title="Checkout" onPress={handleCheckout} />
     </View>
   );
 };
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    padding: 20,
+  },
+  headerText: {
+    fontSize: 20,
+    fontWeight: 'bold',
+    marginBottom: 20,
+  },
+  itemText: {
+    fontSize: 18,
+    marginVertical: 5,
+  },
+  freteText: {
+    fontSize: 16,
+    marginVertical: 10,
+    color: '#28a745',
+  },
+  totalText: {
+    fontSize: 20,
+    fontWeight: 'bold',
+    marginVertical: 20,
+    textAlign: 'center',
+  },
+});
 
 export default TelaPedido;
