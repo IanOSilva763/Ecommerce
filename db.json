@@ -24,6 +24,11 @@
       "id": "c4b7",
       "email": "ian@gmail.com",
       "password": "ian"
+    },
+    {
+      "id": "7eeb",
+      "email": "paulo",
+      "password": "123"
     }
   ],
   "products": [

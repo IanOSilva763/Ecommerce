@@ -1,101 +1,79 @@
-import { useIsFocused } from '@react-navigation/native';
 import React, { useEffect, useState } from 'react';
 import { Alert, Button, FlatList, Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
-import { deleteProductById, fetchOrders, getProducts } from '../api';
-import { fetchOrders, getProducts, deleteProductById } from '../api'; 
+import { fetchOrders, getProducts, deleteProductById } from '../api'; // Corrigido, removendo duplicação
+import { useIsFocused } from '@react-navigation/native';
 
 const TelaAdm = ({ navigation }) => {
   const isFocused = useIsFocused();
-  const [orders, setOrders] = useState([]);
   const [products, setProducts] = useState([]);
-
-  const loadProducts = async () => {
-    try {
-      const fetchedProducts = await getProducts();
-      setProducts(fetchedProducts);
-    } catch (error) {
-      console.error('Erro ao buscar produtos:', error);
-    }
-  };
-
-  const loadOrders = async () => {
-    try {
-      const fetchedOrders = await fetchOrders();
-      setOrders(fetchedOrders);
-    } catch (error) {
-      console.error('Erro ao buscar pedidos:', error);
-    }
-  };
+  const [orders, setOrders] = useState([]);
 
   useEffect(() => {
+    const loadProducts = async () => {
+      try {
+        const fetchedProducts = await getProducts();
+        setProducts(fetchedProducts);
+      } catch (error) {
+        console.error('Erro ao carregar produtos:', error);
+      }
+    };
+
+    const loadOrders = async () => {
+      try {
+        const fetchedOrders = await fetchOrders();
+        setOrders(fetchedOrders);
+      } catch (error) {
+        console.error('Erro ao carregar pedidos:', error);
+      }
+    };
+
     if (isFocused) {
       loadProducts();
       loadOrders();
     }
   }, [isFocused]);
 
-  const editProduct = (productId) => {
-    navigation.navigate('EditProduto', { productId });
-  };
-
-  const deleteProduct = async (productId) => {
+  const handleDeleteProduct = async (productId) => {
     try {
       await deleteProductById(productId);
-      setProducts(products.filter((product) => product.id !== productId));
-      Alert.alert('Sucesso', 'Produto apagado com sucesso');
+      Alert.alert('Produto deletado com sucesso');
+      setProducts(products.filter(product => product.id !== productId));
     } catch (error) {
-      console.error('Erro ao apagar produto:', error);
-      Alert.alert('Erro', 'Não foi possível apagar o produto');
+      Alert.alert('Erro ao deletar produto:', error.message);
     }
   };
 
-  const renderProduct = ({ item }) => (
-    <View style={styles.productContainer}>
-      <Image source={{ uri: item.imageUrl }} style={styles.productImage} onError={() => console.error('Erro ao carregar imagem')} />
-      <Text style={styles.productName}>{item.name}</Text>
-      <Text style={styles.productDescription}>{item.description}</Text>
-      <Text style={styles.productPrice}>R$ {item.price}</Text>
-      <TouchableOpacity onPress={() => editProduct(item.id)} style={styles.button}>
-        <Text style={styles.textbtn}>Editar</Text>
-      </TouchableOpacity>
-      <TouchableOpacity onPress={() => deleteProduct(item.id)} style={styles.button}>
-        <Text style={styles.textbtn}>Apagar</Text>
-      </TouchableOpacity>
+  const renderProductItem = ({ item }) => (
+    <View style={styles.itemContainer}>
+      <Image source={{ uri: item.imageUrl }} style={styles.itemImage} />
+      <Text style={styles.itemName}>{item.name}</Text>
+      <Text style={styles.itemPrice}>R$ {item.price}</Text>
+      <Button title="Deletar" onPress={() => handleDeleteProduct(item.id)} />
     </View>
   );
 
-  const renderOrder = ({ item, index }) => (
-    <View key={index} style={styles.orderContainer}>
-      <Text>Order #{index + 1}</Text>
-      {item.products.map((product, idx) => (
-        <Text key={idx}>{product.name} - R$ {product.price}</Text>
-      ))}
-      <Text>Shipping: R$ {item.shippingCost}</Text>
-      <Text>Total: R$ {item.total}</Text>
+  const renderOrderItem = ({ item }) => (
+    <View style={styles.itemContainer}>
+      <Text style={styles.itemName}>Pedido #{item.id}</Text>
+      <Text style={styles.itemPrice}>Total: R$ {item.total}</Text>
     </View>
   );
 
   return (
     <View style={styles.container}>
-      <Text style={styles.header}>Admin</Text>
-      <Button
-        title="Controle vendas"
-        onPress={() => navigation.navigate('Dashboard')}
-      />
-      <Button
-        title="Adicionar Produto"
-        onPress={() => navigation.navigate('Produto')}
-      />
-      <FlatList
-        data={orders}
-        keyExtractor={(item, index) => index.toString()}
-        renderItem={renderOrder}
-        contentContainerStyle={styles.list}
-      />
+      <Text style={styles.header}>Administração</Text>
+      <Text style={styles.sectionHeader}>Produtos</Text>
       <FlatList
         data={products}
-        keyExtractor={(item) => item.id.toString()}
-        renderItem={renderProduct}
+        keyExtractor={(item) => item.id}
+        renderItem={renderProductItem}
+        contentContainerStyle={styles.list}
+      />
+      <Text style={styles.sectionHeader}>Pedidos</Text>
+      <FlatList
+        data={orders}
+        keyExtractor={(item) => item.id}
+        renderItem={renderOrderItem}
         contentContainerStyle={styles.list}
       />
     </View>
@@ -104,68 +82,50 @@ const TelaAdm = ({ navigation }) => {
 
 const styles = StyleSheet.create({
   container: {
+    flex: 1,
     padding: 10,
   },
-  list: {
-    paddingBottom: 22,
+  header: {
+    fontSize: 24,
+    fontWeight: 'bold',
+    textAlign: 'center',
+    marginBottom: 20,
   },
-  productContainer: {
-    marginBottom: 100,
+  sectionHeader: {
+    fontSize: 20,
+    fontWeight: 'bold',
+    marginVertical: 10,
+  },
+  list: {
+    paddingBottom: 10,
+  },
+  itemContainer: {
+    flexDirection: 'row',
+    marginBottom: 20,
     borderWidth: 1,
     borderColor: '#ccc',
     borderRadius: 10,
     overflow: 'hidden',
     backgroundColor: '#fff',
+    alignItems: 'center',
+    padding: 10,
   },
-  productImage: {
-    width: '100%',
-    height: 200,
+  itemImage: {
+    width: 100,
+    height: 100,
     resizeMode: 'cover',
   },
-  productName: {
+  itemName: {
+    flex: 1,
     fontSize: 18,
     fontWeight: 'bold',
-    margin: 10,
-  },
-  productDescription: {
-    fontSize: 16,
     marginHorizontal: 10,
   },
-  productPrice: {
+  itemPrice: {
     fontSize: 16,
     fontWeight: 'bold',
-    margin: 10,
+    marginHorizontal: 10,
     color: '#28a745',
-  },
-  header: {
-    fontSize: 24,
-    fontWeight: 'bold',
-    marginBottom: 1,
-  },
-  button: {
-    alignItems: 'center',
-    justifyContent: 'center',
-    paddingVertical: 20,
-    paddingHorizontal: 32,
-    borderRadius: 4,
-    marginTop: 10,
-    elevation: 3,
-    backgroundColor: '#FFFFFF',
-  },
-  textbtn: {
-    fontSize: 16,
-    lineHeight: 21,
-    fontWeight: 'bold',
-    letterSpacing: 0.25,
-    color: 'black',
-  },
-  orderContainer: {
-    marginBottom: 20,
-    padding: 10,
-    borderWidth: 1,
-    borderColor: '#ccc',
-    borderRadius: 10,
-    backgroundColor: '#f9f9f9',
   },
 });
 

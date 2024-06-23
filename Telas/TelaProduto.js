@@ -1,6 +1,6 @@
 import { useIsFocused } from '@react-navigation/native';
 import React, { useEffect, useState } from 'react';
-import { Alert, StyleSheet, Text, TextInput, TouchableOpacity, View, StyleSheet } from 'react-native';
+import { Alert, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
 import { addProduct } from '../api';
 
 const TelaProduto = ({ navigation }) => {
@@ -12,7 +12,6 @@ const TelaProduto = ({ navigation }) => {
 
   useEffect(() => {
     if (isFocused) {
-      // Limpar os campos quando a tela ganhar foco
       setName('');
       setDescription('');
       setPrice('');

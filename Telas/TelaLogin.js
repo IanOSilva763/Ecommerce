@@ -30,7 +30,7 @@ const TelaLogin = ({ navigation }) => {
           fallbackLabel: 'Use Passcode',
         });
         if (result.success) {
-          const user = await getUserByEmail(email);  // Verify user credentials
+          const user = await getUserByEmail(email); 
           if (user && user.password === password) {
             navigation.navigate('Inicio', { isAdmin: user.email === 'adm' && user.password === 'adm' });
           } else {

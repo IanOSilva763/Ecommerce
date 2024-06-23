@@ -18,6 +18,7 @@
     "expo": "~51.0.9",
     "expo-local-authentication": "~14.0.1",
     "expo-status-bar": "~1.12.1",
+    "geolib": "^3.3.4",
     "react": "18.2.0",
     "react-native": "0.74.1",
     "react-native-chart-kit": "^6.12.0",

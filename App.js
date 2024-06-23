@@ -9,6 +9,7 @@ import TelaEditProduto from './Telas/TelaEditProduto';
 import TelaInicial from './Telas/TelaInicial';
 import TelaLogin from './Telas/TelaLogin';
 import TelaProduto from './Telas/TelaProduto';
+import TelaCalculoFrete from './Telas/TelaCalculoFrete';
 
 const Stack = createStackNavigator();
 
@@ -31,6 +32,7 @@ export default function App() {
           <Stack.Screen name="EditProduto" component={TelaEditProduto} />
           <Stack.Screen name="Carrinho" component={TelaCarrinho} />
           <Stack.Screen name="Dashboard" component={TelaDashboard} />
+          <Stack.Screen name="CalculoFrete" component={TelaCalculoFrete} />
         </Stack.Navigator>
       </NavigationContainer>
     </CartProvider>

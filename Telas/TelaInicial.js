@@ -1,9 +1,11 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useIsFocused } from '@react-navigation/native';
+import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import { Button, FlatList, Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { getProducts } from '../api';
+import geolib from 'geolib';
 
 const TelaInicial = ({ route, navigation }) => {
   const { isAdmin } = route.params;
@@ -57,6 +59,40 @@ const TelaInicial = ({ route, navigation }) => {
     navigation.navigate('Carrinho', { cartItems: updatedCartItems });
   };
 
+  // Função para obter coordenadas geográficas a partir do CEP usando a API do ViaCEP
+  const fetchCoordinatesFromCEP = async (cep) => {
+    try {
+      const response = await axios.get(`https://viacep.com.br/ws/${cep}/json/`);
+      const { data } = response;
+      if (data && !data.erro) {
+        return { latitude: parseFloat(data.lat), longitude: parseFloat(data.lng) };
+      } else {
+        console.error('CEP não encontrado');
+        return null;
+      }
+    } catch (error) {
+      console.error('Erro ao buscar coordenadas pelo CEP:', error);
+      return null;
+    }
+  };
+
+  // Função para calcular a distância entre duas coordenadas geográficas usando Haversine formula
+  const calcularDistancia = async (product, cep) => {
+    try {
+      const coordinatesProduct = { latitude: product.latitude, longitude: product.longitude };
+      const coordinatesUser = await fetchCoordinatesFromCEP(cep);
+      if (coordinatesUser) {
+        const distancia = geolib.getPreciseDistance(coordinatesUser, coordinatesProduct) / 1000; // em quilômetros
+        return distancia.toFixed(2); // arredonda para duas casas decimais
+      } else {
+        return null;
+      }
+    } catch (error) {
+      console.error('Erro ao calcular distância:', error);
+      return null;
+    }
+  };
+
   const renderProduct = ({ item }) => (
     <View style={styles.containerProduto}>
       <Image source={{ uri: item.imageUrl }} style={styles.imagemProduto} />
@@ -64,6 +100,7 @@ const TelaInicial = ({ route, navigation }) => {
       <Text style={styles.descricaoProduto}>{item.description}</Text>
       <Text style={styles.precoProduto}>R$ {item.price}</Text>
       <Button title="Adicionar ao Carrinho" onPress={() => addToCart(item)} />
+      <Text style={styles.freteInfo}>Distância: {item.cep ? `${calcularDistancia(item, item.cep)} km` : 'Informe o CEP para calcular'}</Text>
     </View>
   );
 
@@ -138,6 +175,11 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     margin: 10,
     color: '#28a745',
+  },
+  freteInfo: {
+    fontSize: 14,
+    marginHorizontal: 10,
+    color: '#888',
   },
 });
 

@@ -61,7 +61,7 @@ const TelaCarrinho = ({ route, navigation }) => {
       await AsyncStorage.removeItem('@cartItems');
 
       Alert.alert('Compra Finalizada', 'Obrigado por comprar conosco!');
-      navigation.navigate('Inicio'); // Navegar para a TelaDashboard após finalizar a compra
+      navigation.navigate('Inicio', { isAdmin: route.params.isAdmin }); // Navegar para a TelaDashboard após finalizar a compra
     } catch (error) {
       console.error('Erro ao finalizar compra:', error);
     }
@@ -93,6 +93,10 @@ const TelaCarrinho = ({ route, navigation }) => {
           <Text style={styles.totalText}>Total: R$ {total.toFixed(2)}</Text>
           <View style={styles.buttonsContainer}>
             <Button title="Finalizar Compra" onPress={removeAllItems} />
+            <Button
+              title="Calcular Frete"
+              onPress={() => navigation.navigate('CalculoFrete')}
+            />
           </View>
         </>
       )}
@@ -103,52 +107,53 @@ const TelaCarrinho = ({ route, navigation }) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    padding: 10,
-  },
-  list: {
-    paddingBottom: 10,
-  },
-  cartItemContainer: {
-    flexDirection: 'row',
-    marginBottom: 20,
-    borderWidth: 1,
-    borderColor: '#ccc',
-    borderRadius: 10,
-    overflow: 'hidden',
-    backgroundColor: '#fff',
+    justifyContent: 'center',
     alignItems: 'center',
-    padding: 10,
-  },
-  itemImage: {
-    width: 100,
-    height: 100,
-    resizeMode: 'cover',
-  },
-  itemName: {
-    flex: 1,
-    fontSize: 18,
-    fontWeight: 'bold',
-    marginHorizontal: 10,
-  },
-  itemPrice: {
-    fontSize: 16,
-    fontWeight: 'bold',
-    marginHorizontal: 10,
-    color: '#28a745',
-  },
-  totalText: {
-    fontSize: 20,
-    fontWeight: 'bold',
-    textAlign: 'center',
-    marginVertical: 10,
+    padding: 20,
   },
   emptyCartText: {
     fontSize: 18,
     textAlign: 'center',
-    marginVertical: 10,
+  },
+  list: {
+    flexGrow: 1,
+    justifyContent: 'flex-start',
+  },
+  cartItemContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginBottom: 10,
+    padding: 10,
+    backgroundColor: '#fff',
+    borderRadius: 8,
+    borderWidth: 1,
+    borderColor: '#ccc',
+  },
+  itemImage: {
+    width: 50,
+    height: 50,
+    borderRadius: 25,
+    marginRight: 10,
+  },
+  itemName: {
+    flex: 1,
+    fontSize: 16,
+    fontWeight: 'bold',
+  },
+  itemPrice: {
+    fontSize: 16,
+    marginLeft: 10,
+  },
+  totalText: {
+    fontSize: 20,
+    fontWeight: 'bold',
+    marginBottom: 10,
   },
   buttonsContainer: {
-    alignItems: 'center',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    width: '100%',
+    marginTop: 20,
   },
 });
 
