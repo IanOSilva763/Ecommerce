@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Alert, Button, FlatList, Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
-import { fetchOrders, getProducts, deleteProductById } from '../api'; // Certifique-se de que deleteProductById esteja importada corretamente
+import { fetchOrders, getProducts, deleteProductById } from '../api'; 
 
 const TelaAdm = ({ navigation }) => {
   const [orders, setOrders] = useState([]);
@@ -49,7 +49,7 @@ const TelaAdm = ({ navigation }) => {
 
   const renderProduct = ({ item }) => (
     <View style={styles.productContainer}>
-      <Image source={{ uri: item.imageUrl }} style={styles.productImage} />
+      <Image source={{ uri: item.imageUrl }} style={styles.productImage} onError={() => console.error('Erro ao carregar imagem')} />
       <Text style={styles.productName}>{item.name}</Text>
       <Text style={styles.productDescription}>{item.description}</Text>
       <Text style={styles.productPrice}>R$ {item.price}</Text>
