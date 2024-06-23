@@ -10,7 +10,6 @@ const TelaProduto = ({ navigation }) => {
 
   const handleAddProduct = async () => {
     const product = { name, description, price, imageUrl };
-    const product = { name, description, price, imageUrl };
     try {
       await addProduct(product);
       Alert.alert('Sucesso', 'Produto adicionado com sucesso');
@@ -161,4 +160,3 @@ const styles = StyleSheet.create({
 });
 
 export default TelaProduto;
-

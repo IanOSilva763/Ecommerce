@@ -8,7 +8,6 @@ const TelaInicial = ({ route, navigation }) => {
   const { isAdmin } = route.params;
   const [products, setProducts] = useState([]);
   const [cartItems, setCartItems] = useState([]);
-  const [cartItems, setCartItems] = useState([]);
 
   useEffect(() => {
     const fetchProducts = async () => {
