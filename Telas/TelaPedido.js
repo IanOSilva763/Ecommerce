@@ -16,14 +16,14 @@ const TelaPedido = () => {
 
   return (
     <View>
-      <Text>Order Summary</Text>
+      <Text>Resumo da compra</Text>
       {cart.map(product => (
         <Text key={product.id}>{product.name} - ${product.price}</Text>
       ))}
       {shipping && (
         <>
-          <Text>Shipping Cost: ${shipping.shippingCost}</Text>
-          <Text>Delivery Time: {shipping.deliveryTime}</Text>
+          <Text>Valor do frete: R${shipping.shippingCost}</Text>
+          <Text>Tempo de Delivery: {shipping.deliveryTime}</Text>
         </>
       )}
       <Text>Total: ${total}</Text>

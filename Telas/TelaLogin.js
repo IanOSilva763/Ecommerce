@@ -48,14 +48,25 @@ const TelaLogin = ({ navigation }) => {
   };
 
   return (
-    <View style={style.container} >
-      <TextInput style={style.textInput} placeholder="Email" value={email} onChangeText={setEmail} />
-      <TextInput style={style.textInput} placeholder="Password" value={password} secureTextEntry onChangeText={setPassword} />
+    <View style={style.container}>
+      <TextInput
+        style={style.textInput}
+        placeholder="Email"
+        value={email}
+        onChangeText={setEmail}
+      />
+      <TextInput
+        style={style.textInput}
+        placeholder="Password"
+        value={password}
+        secureTextEntry
+        onChangeText={setPassword}
+      />
       <TouchableOpacity onPress={loginUser} style={style.button}>
         <Text style={style.textbtn}>Login</Text>
       </TouchableOpacity>
       <TouchableOpacity onPress={() => navigation.navigate('Cadastro')} style={[style.button, style.signupButton]}>
-        <Text style={style.textbtn}>Sign Up</Text>
+        <Text style={style.textbtn}>Cadastrar</Text>
       </TouchableOpacity>
     </View>
   );
@@ -79,7 +90,7 @@ const style = StyleSheet.create({
     backgroundColor: '#FFFFFF',
   },
   signupButton: {
-    marginTop: 20, 
+    marginTop: 20,
   },
   textbtn: {
     fontSize: 16,

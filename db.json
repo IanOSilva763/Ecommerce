@@ -23,12 +23,11 @@
   ],
   "products": [
     {
-      "id": "073c",
-      "name": "Tênis",
-      "description": "Tênis Nike branco 39/40",
-      "price": "115",
-      "category": "Roupas",
-      "imageUrl": "https://images.app.goo.gl/egQW4zcotCGwWJD9A"
+      "id": "1c32",
+      "name": "Tenis",
+      "description": "Tenis",
+      "price": "85",
+      "imageUrl": "https://cdn.awsli.com.br/600x1000/1392/1392737/produto/188276783/d93e5dc2bc.jpg"
     }
   ],
   "orders": []

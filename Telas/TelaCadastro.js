@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Alert, TouchableOpacity, StyleSheet, TextInput, View, Text } from 'react-native';
+import { Alert, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
 import { registerUser } from '../api';
 
 const TelaCadastro = ({ navigation }) => {
@@ -10,17 +10,28 @@ const TelaCadastro = ({ navigation }) => {
     const user = { email, password };
     try {
       await registerUser(user);
-      Alert.alert('Success', 'User registered successfully');
+      Alert.alert('Cadastro realizado com Sucesso');
       navigation.navigate('Login');
     } catch (error) {
-      Alert.alert('Sign Up Error', error.message);
+      Alert.alert('Erro ao criar cadastro', error.message);
     }
   };
 
   return (
     <View style={style.container}>
-      <TextInput style={style.textInput} placeholder="Email" value={email} onChangeText={setEmail} />
-      <TextInput style={style.textInput} placeholder="Password" value={password} secureTextEntry onChangeText={setPassword} />
+      <TextInput
+        style={style.textInput}
+        placeholder="Email"
+        value={email}
+        onChangeText={setEmail}
+      />
+      <TextInput
+        style={style.textInput}
+        placeholder="Password"
+        value={password}
+        secureTextEntry
+        onChangeText={setPassword}
+      />
       <TouchableOpacity onPress={signUpUser} style={style.button}>
         <Text style={style.textbtn}>Sign Up</Text>
       </TouchableOpacity>
@@ -42,7 +53,7 @@ const style = StyleSheet.create({
     paddingHorizontal: 32,
     borderRadius: 4,
     elevation: 3,
-    backgroundColor: '#FFFFFF', 
+    backgroundColor: '#FFFFFF',
   },
   textbtn: {
     fontSize: 16,

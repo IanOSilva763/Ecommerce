@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import { Button, FlatList, Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
-import { fetchOrders, getProducts } from '../api'; // Certifique-se de que o caminho está correto
+import { Alert, Button, FlatList, Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { deleteProductById, fetchOrders, getProducts } from '../api'; // Certifique-se de que deleteProductById esteja importada corretamente
 
 const TelaAdm = ({ navigation }) => {
   const [orders, setOrders] = useState([]);
@@ -33,14 +33,12 @@ const TelaAdm = ({ navigation }) => {
   }, []);
 
   const editProduct = (productId) => {
-    // Navegar para a tela de edição com o ID do produto
     navigation.navigate('EditProduto', { productId });
   };
 
   const deleteProduct = async (productId) => {
     try {
       await deleteProductById(productId);
-      // Atualizar a lista de produtos após a exclusão
       setProducts(products.filter((product) => product.id !== productId));
       Alert.alert('Sucesso', 'Produto apagado com sucesso');
     } catch (error) {
@@ -50,22 +48,22 @@ const TelaAdm = ({ navigation }) => {
   };
 
   const renderProduct = ({ item }) => (
-    <View styles={styles.productContainer}>
-      <Image source={{ uri: item.imageUrl }} styles={styles.productImage} />
-      <Text styles={styles.productName}>{item.name}</Text>
-      <Text styles={styles.productDescription}>{item.description}</Text>
-      <Text styles={styles.productPrice}>R$ {item.price}</Text>
-      <TouchableOpacity onPress={() => editProduct(item.id)} styles={[styles.button]}>
-        <Text styles={styles.textbtn}>Editar</Text>
+    <View style={styles.productContainer}>
+      <Image source={{ uri: item.imageUrl }} style={styles.productImage} />
+      <Text style={styles.productName}>{item.name}</Text>
+      <Text style={styles.productDescription}>{item.description}</Text>
+      <Text style={styles.productPrice}>R$ {item.price}</Text>
+      <TouchableOpacity onPress={() => editProduct(item.id)} style={styles.button}>
+        <Text style={styles.textbtn}>Editar</Text>
       </TouchableOpacity>
-      <TouchableOpacity onPress={() => deleteProduct(item.id)} styles={[styles.button]}>
-        <Text styles={styles.textbtn}>Apagar</Text>
+      <TouchableOpacity onPress={() => deleteProduct(item.id)} style={styles.button}>
+        <Text style={styles.textbtn}>Apagar</Text>
       </TouchableOpacity>
     </View>
   );
 
   const renderOrder = ({ item, index }) => (
-    <View key={index} styles={styles.orderContainer}>
+    <View key={index} style={styles.orderContainer}>
       <Text>Order #{index + 1}</Text>
       {item.products.map((product, idx) => (
         <Text key={idx}>{product.name} - R$ {product.price}</Text>
@@ -76,10 +74,14 @@ const TelaAdm = ({ navigation }) => {
   );
 
   return (
-    <View styles={styles.container}>
-      <Text styles={styles.header}>Admin Dashboard</Text>
+    <View style={styles.container}>
+      <Text style={styles.header}>Admin</Text>
       <Button
-        title="Ir para Produtos"
+        title="Controle vendas"
+        onPress={() => navigation.navigate('Dashboard')}
+      />
+      <Button
+        title="Adicionar Produto"
         onPress={() => navigation.navigate('Produto')}
       />
       <FlatList
@@ -103,10 +105,10 @@ const styles = StyleSheet.create({
     padding: 10,
   },
   list: {
-    padding: 10,
+    paddingBottom: 10,
   },
   productContainer: {
-    marginBottom: 20,
+    marginBottom: 90,
     borderWidth: 1,
     borderColor: '#ccc',
     borderRadius: 10,
@@ -138,17 +140,6 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     marginBottom: 20,
   },
-  list: {
-    paddingBottom: 10,
-  },
-  productContainer: {
-    marginBottom: 20,
-    borderWidth: 1,
-    borderColor: '#ccc',
-    borderRadius: 10,
-    overflow: 'hidden',
-    backgroundColor: '#fff',
-  },
   button: {
     alignItems: 'center',
     justifyContent: 'center',
@@ -165,26 +156,6 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     letterSpacing: 0.25,
     color: 'black',
-  },
-  productImage: {
-    width: '100%',
-    height: 200,
-    resizeMode: 'cover',
-  },
-  productName: {
-    fontSize: 18,
-    fontWeight: 'bold',
-    margin: 10,
-  },
-  productDescription: {
-    fontSize: 16,
-    marginHorizontal: 10,
-  },
-  productPrice: {
-    fontSize: 16,
-    fontWeight: 'bold',
-    margin: 10,
-    color: '#28a745',
   },
   orderContainer: {
     marginBottom: 20,
